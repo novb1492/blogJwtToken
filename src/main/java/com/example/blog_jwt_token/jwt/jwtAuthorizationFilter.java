@@ -50,7 +50,7 @@ public class jwtAuthorizationFilter  extends BasicAuthenticationFilter {
                     System.out.println(userDto.getEmail());
                     
                     principaldetail principaldetail=new principaldetail(userDto);
-                    Authentication authentication=new UsernamePasswordAuthenticationToken(userDto.getEmail(),null,principaldetail.getAuthorities());
+                    Authentication authentication=new UsernamePasswordAuthenticationToken(userDto.getEmail(),userDto.getPwd(),principaldetail.getAuthorities());
 
                     jwtService.setSecuritySession(authentication);
             
@@ -68,7 +68,7 @@ public class jwtAuthorizationFilter  extends BasicAuthenticationFilter {
                         userDto userDto=dao.findById(jwtDto.getUserid()).orElseThrow(()->new RuntimeException("존재하지 않는 사용자입니다"));
 
                         principaldetail principaldetail=new principaldetail(userDto);
-                        Authentication authentication=new UsernamePasswordAuthenticationToken(userDto.getEmail(),null,principaldetail.getAuthorities());
+                        Authentication authentication=new UsernamePasswordAuthenticationToken(userDto.getEmail(),userDto.getPwd(),principaldetail.getAuthorities());
     
                         jwtService.setSecuritySession(authentication);
                         
