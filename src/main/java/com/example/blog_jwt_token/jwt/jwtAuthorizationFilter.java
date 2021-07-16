@@ -1,0 +1,61 @@
+package com.example.blog_jwt_token.jwt;
+
+import java.io.IOException;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.example.blog_jwt_token.model.user.userDao;
+import com.example.blog_jwt_token.model.user.userDto;
+
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+
+public class jwtAuthorizationFilter  extends BasicAuthenticationFilter {
+
+    private userDao dao;
+    private jwtService jwtService;
+
+    public jwtAuthorizationFilter(AuthenticationManager authenticationManager,userDao dao,jwtService jwtService) {
+        super(authenticationManager);
+        this.dao=dao;
+        this.jwtService=jwtService;
+    }
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)throws IOException, ServletException {
+        System.out.println("doFilterInternal 입장");
+        if(request.getHeader("Authorization")==null||!request.getHeader("Authorization").startsWith("Bearer")){
+            chain.doFilter(request, response);
+        }else{
+            String jwtToken=request.getHeader("Authorization");
+            if(jwtToken.startsWith("Bearer")){
+                jwtToken=jwtToken.replace("Bearer ", "");
+                System.out.println(jwtToken+"토큰받음");
+                try {
+                    int userid=JWT.require(Algorithm.HMAC512("kim")).build().verify(jwtToken).getClaim("id").asInt();
+                    System.out.println(userid+"토큰해제");
+ 
+                    userDto userDto=dao.findById(userid).orElseThrow(()->new RuntimeException("존재하지 않는 회원입니다"));
+            
+                    System.out.println(userDto.getEmail());
+             
+                    Authentication authentication=jwtService.getAuthentication(userDto);
+                    jwtService.setSecuritySession(authentication);
+            
+                    chain.doFilter(request, response);   
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }else{
+                System.out.println("정상적인 토큰이 아닙니다"); 
+            }
+        } 
+    }
+    
+}

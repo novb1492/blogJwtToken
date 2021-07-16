@@ -1,6 +1,7 @@
 package com.example.blog_jwt_token.config;
 
 
+import com.example.blog_jwt_token.jwt.jwtAuthorizationFilter;
 import com.example.blog_jwt_token.jwt.jwtLoginFilter;
 import com.example.blog_jwt_token.jwt.jwtService;
 import com.example.blog_jwt_token.model.user.userDao;
@@ -49,7 +50,7 @@ public class security extends WebSecurityConfigurerAdapter {
         .and()
         .formLogin().disable()
         .httpBasic().disable()
-        //.addFilter(new jwtAuthorizationFilter(authenticationManager(), dao,getTokenService))
+        .addFilter(new jwtAuthorizationFilter(authenticationManager(),dao,jwtService))
         .addFilter(new jwtLoginFilter(jwtService))
         .authorizeRequests()
         .antMatchers("/","/auth/**","/login")////이 링크들은
