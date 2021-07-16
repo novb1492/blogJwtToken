@@ -30,7 +30,7 @@ public class jwtService {
     }
     public Authentication getAuthentication(userDto dto) {
         principaldetail principaldetail=new principaldetail(dto);
-        return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(dto.getEmail(),"1111",principaldetail.getAuthorities()));
+        return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(dto.getEmail(),dto.getPwd(),principaldetail.getAuthorities()));
     }
     public void setSecuritySession(Authentication authentication) {
         SecurityContextHolder.getContext().setAuthentication(authentication);

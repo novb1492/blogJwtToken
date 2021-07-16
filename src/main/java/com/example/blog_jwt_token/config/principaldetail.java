@@ -18,7 +18,6 @@ public class principaldetail implements UserDetails {
    public principaldetail(userDto userDto){
        this.userDto=userDto;
    }
-    
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority>collet=new ArrayList<>();
@@ -31,32 +30,26 @@ public class principaldetail implements UserDetails {
         });
         return collet;
     }
-
     @Override
     public String getPassword() {
         return userDto.getPwd();
     }
-
     @Override
     public String getUsername() {
         return userDto.getEmail();
     }
-
     @Override
     public boolean isAccountNonExpired() {  
         return true;
     }
-
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
-
     @Override
     public boolean isCredentialsNonExpired() {  
         return true;
     }
-
     @Override
     public boolean isEnabled() {
         return true;
