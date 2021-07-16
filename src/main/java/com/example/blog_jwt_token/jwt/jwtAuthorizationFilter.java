@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.TokenExpiredException;
+import com.example.blog_jwt_token.model.jwt.jwtDto;
 import com.example.blog_jwt_token.model.user.userDao;
 import com.example.blog_jwt_token.model.user.userDto;
 
@@ -49,8 +51,25 @@ public class jwtAuthorizationFilter  extends BasicAuthenticationFilter {
                     jwtService.setSecuritySession(authentication);
             
                     chain.doFilter(request, response);   
-                } catch (Exception e) {
+                } catch (TokenExpiredException e) {
                     e.printStackTrace();
+                    System.out.println("토큰이 만료 되었습니다");
+                    String refreshToken=request.getHeader("refreshToken");
+                    System.out.println(refreshToken+" 리프레시 토큰");
+                    if(refreshToken.startsWith("Bearer")){
+                        jwtDto jwtDto=jwtService.getRefreshToken(jwtService.replaceBearer(refreshToken));
+                        String newJwtToken=jwtService.getNewJwtToken(jwtDto);
+                        System.out.println(newJwtToken+" 새 토큰");
+
+                        userDto userDto=dao.findById(jwtDto.getUserid()).orElseThrow(()->new RuntimeException("존재하지 않는 사용자입니다"));
+                        jwtService.setSecuritySession(jwtService.getAuthentication(userDto));
+                        
+                        response.setHeader("Authorization","Bearer "+newJwtToken);
+                        response.setHeader("refreshToken", refreshToken);
+                        chain.doFilter(request, response);  
+                    }else{
+                        System.out.println("정상적인 리프레시 토큰이 아닙니다");
+                    }
                 }
             }else{
                 System.out.println("정상적인 토큰이 아닙니다"); 
