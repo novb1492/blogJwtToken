@@ -20,4 +20,19 @@ public class restcontroller {
         System.out.println("/auth/head 입장");
         return "/auth/head";
     }
+    @RequestMapping("/api/v1/user/test")
+    public String  user(HttpServletRequest request,HttpServletResponse response) {
+        System.out.println("user 입장");
+        return "user";
+    }
+    @RequestMapping("/api/v1/manage/test")
+    public String  manage(HttpServletRequest request,HttpServletResponse response) {
+        System.out.println("manage 입장");
+        return "manage";
+    }
+    @RequestMapping("/api/v1/admin/test")
+    public String  admin(HttpServletRequest request,HttpServletResponse response) {
+        System.out.println("admin 입장");
+        return "admin";
+    }
 }
