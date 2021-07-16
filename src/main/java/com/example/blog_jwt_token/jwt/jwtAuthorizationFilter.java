@@ -10,11 +10,13 @@ import javax.servlet.http.HttpServletResponse;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.TokenExpiredException;
+import com.example.blog_jwt_token.config.principaldetail;
 import com.example.blog_jwt_token.model.jwt.jwtDto;
 import com.example.blog_jwt_token.model.user.userDao;
 import com.example.blog_jwt_token.model.user.userDto;
 
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
@@ -46,8 +48,10 @@ public class jwtAuthorizationFilter  extends BasicAuthenticationFilter {
                     userDto userDto=dao.findById(userid).orElseThrow(()->new RuntimeException("존재하지 않는 회원입니다"));
             
                     System.out.println(userDto.getEmail());
-             
-                    Authentication authentication=jwtService.getAuthentication(userDto);
+                    
+                    principaldetail principaldetail=new principaldetail(userDto);
+                    Authentication authentication=new UsernamePasswordAuthenticationToken(userDto.getEmail(),null,principaldetail.getAuthorities());
+
                     jwtService.setSecuritySession(authentication);
             
                     chain.doFilter(request, response);   
@@ -62,7 +66,11 @@ public class jwtAuthorizationFilter  extends BasicAuthenticationFilter {
                         System.out.println(newJwtToken+" 새 토큰");
 
                         userDto userDto=dao.findById(jwtDto.getUserid()).orElseThrow(()->new RuntimeException("존재하지 않는 사용자입니다"));
-                        jwtService.setSecuritySession(jwtService.getAuthentication(userDto));
+
+                        principaldetail principaldetail=new principaldetail(userDto);
+                        Authentication authentication=new UsernamePasswordAuthenticationToken(userDto.getEmail(),null,principaldetail.getAuthorities());
+    
+                        jwtService.setSecuritySession(authentication);
                         
                         response.setHeader("Authorization","Bearer "+newJwtToken);
                         response.setHeader("refreshToken", refreshToken);
