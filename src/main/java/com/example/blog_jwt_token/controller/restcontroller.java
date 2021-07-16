@@ -3,6 +3,8 @@ package com.example.blog_jwt_token.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.nimbusds.jose.shaded.json.JSONObject;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,9 +23,12 @@ public class restcontroller {
         return "/auth/head";
     }
     @RequestMapping("/api/v1/user/test")
-    public String  user(HttpServletRequest request,HttpServletResponse response) {
+    public JSONObject  user(HttpServletRequest request,HttpServletResponse response) {
         System.out.println("user 입장");
-        return "user";
+        JSONObject jsonObject=new JSONObject();
+        jsonObject.put("role", "user");
+        jsonObject.put("hello", "world");
+        return jsonObject;
     }
     @RequestMapping("/api/v1/manage/test")
     public String  manage(HttpServletRequest request,HttpServletResponse response) {
