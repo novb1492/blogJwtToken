@@ -30,12 +30,12 @@ public class controller {
     }
     @RequestMapping("/auth2")
     public String Atuh2(HttpServletRequest request,HttpServletResponse response) {
-        response.setHeader("test", request.getHeader("Authorization"));
+        System.out.println("/auth2입장");
+        System.out.println(request.getHeader("Authorization")+"헤더");
         return "auth2page";
     }
     @RequestMapping("/auth/index")
     public String authIndex(HttpServletRequest request,HttpServletResponse response) {
-
         return "index";
     }
     
