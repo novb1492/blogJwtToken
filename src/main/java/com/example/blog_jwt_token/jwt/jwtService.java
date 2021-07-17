@@ -26,7 +26,7 @@ public class jwtService {
 
     public String getJwtToken(int id) {
         System.out.println("토큰 제작시작");
-        return JWT.create().withSubject("jwtToken").withExpiresAt(new Date(System.currentTimeMillis()+1000)).withClaim("id",id).sign(Algorithm.HMAC512("kim"));
+        return JWT.create().withSubject("jwtToken").withExpiresAt(new Date(System.currentTimeMillis()+(1000*30))).withClaim("id",id).sign(Algorithm.HMAC512("kim"));
     }
     public Authentication getAuthentication(userDto dto) {
         principaldetail principaldetail=new principaldetail(dto);

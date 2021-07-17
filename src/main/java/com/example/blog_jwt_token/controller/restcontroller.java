@@ -3,13 +3,26 @@ package com.example.blog_jwt_token.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.example.blog_jwt_token.service.naverLoingService;
 import com.nimbusds.jose.shaded.json.JSONObject;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class restcontroller {
+
+    
+    @Autowired
+    private naverLoingService naverLoingService;
+
+
+
+    @RequestMapping("/auth/naver")
+    public String naverLogin() {
+        return  naverLoingService.naverLogin();
+    }
     
     @RequestMapping("/head")
     public String  Head(HttpServletRequest request,HttpServletResponse response) {
