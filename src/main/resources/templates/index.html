@@ -5,82 +5,45 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
-    
+  
+  
     <title>Document</title>
 </head>
 <body>
     home
     <div sec:authorize="isAuthenticated()"><!--else문을 모르겠다-->
         <div sec:authentication="name"></div>
-        <input type ="hidden"name ="hoge"th:value ="${#httpServletResponse.getHeader('Authorization')}"/> 
     </div>
-                    <div id="test" th:value="${test}"></div>
-                    <div id="test2" value="test2"></div>
-    <input type="button" id="headtest2"value="headtest2" th:onclick="headtest2([[${test}]])">
+    <input type="button" id="showhead" onclick="showhead()" value="showhead">
     <input type="button" id="headtest" value="headtest">
-    <input type="button" id="listtest" value="listtest">
     <input type="button" value="jsontest"  onclick="jsontest()">
     <input type="button" onclick="doDo()" value="logintest">
     <input type="button" onclick="goNaverLogin()" value="네이버 로그인">
-    <input type="button" onclick="out()"value="ajaxtest">
     <a href="/auth/gettoken">헤드확인</a>
+    <a href="/auth/auth">페이지 이동</a>
+    <a href="/auth2">페이지 이동2</a>
 <script>
-function headtest2(token){
-    console.log(token);
-        $.ajax({
-        type: "GET",
-        url: "/auth/head",
-        beforeSend: function (xhr) {
-            xhr.setRequestHeader("Authorization","test " + token);
-        },
-        success: function (res) {
-            console.log(res);
-        }
-        });
+function showhead(){
+    console.log(jwt);
+    console.log(refresh);
 }
 $(function(){
+    var jwt;
+    var refresh;
     $('#headtest').click(function(){
-        var head='eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjb3MiLCJpZCI6NSwiZXhwIjoxNjI2MzI0OTc5LCJ1c2VybmFtZSI6Im5vdmExNDkyQG5hdmVyLmNvbSJ9.qABQr79BBW8sr3j2chsgu8_Vv00TpTOog67HZiQ4FGeTQSokw45eYbcJFfa6E8jk-K-nVO0oLG7U5dWQNjfMow';
-        console.log(head);
         $.ajax({
         type: "GET",
-        url: "/auth/head",
+        url: "/auth/auth",
         beforeSend: function (xhr) {
-            xhr.setRequestHeader("Authorization","test " + head);
+            xhr.setRequestHeader("Authorization",jwt);
+            xhr.setRequestHeader("refreshToken",refresh);
         },
-        success: function (res) {
-            console.log(res);
-        }
-        });
-    })
-    $('#listtest').click(function(){
-        var list=[1,2];
-        alert(list[0]);
-        $.ajax({
-        type: "GET",
-        url: "/auth/listtest",
-        data:{
-            "list":list,
-            "test":"test"
-        },           
         success: function (res) {
             console.log(res);
         }
         });
     })
 })
-    function out(){
-        $.ajax({
-            type:"post",
-            url:"/auth/auth5",
-            data:{
-                "test":"auth5test",
-            },
-            success:function(data){
-                alert(data);
-            }
-        })    
-    }
 function jsontest(){
     var xhr,url='/auth/jsontest';
     var data=JSON.stringify({"email":"kim@kim.com","pwd":"1111"});
@@ -107,8 +70,13 @@ function doDo(){
     var xhr,url='/login';
     var data=JSON.stringify({"email":"kim@kim.com","pwd":"1111"});
     var contentType="application/json";
-    doajax(url,data,contentType);
-    
+    xhr=doajax(url,data,contentType);
+    xhr.onload=function(){
+        if(xhr.status==200){
+            jwt=xhr.getResponseHeader('Authorization');
+            refresh=xhr.getResponseHeader('refreshToken');
+        }
+    }
 }
 function goNaverLogin(){
     var xhr,url='/auth/naver',data=null;

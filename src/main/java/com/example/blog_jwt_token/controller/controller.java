@@ -22,8 +22,20 @@ public class controller {
         naverLoingService.LoginNaver(naverLoingService.getNaverToken(request.getParameter("code"), request.getParameter("state")),request,response);
         return "index";
     }
-    @RequestMapping("/index")
-    public String index(HttpServletRequest request,HttpServletResponse response) {
+    @RequestMapping("/auth/auth")
+    public String authAtuh(HttpServletRequest request,HttpServletResponse response) {
+        System.out.println("/auth/auth입장");
+        System.out.println(request.getHeader("Authorization")+"헤더");
+        return "authpage";
+    }
+    @RequestMapping("/auth2")
+    public String Atuh2(HttpServletRequest request,HttpServletResponse response) {
+        response.setHeader("test", request.getHeader("Authorization"));
+        return "auth2page";
+    }
+    @RequestMapping("/auth/index")
+    public String authIndex(HttpServletRequest request,HttpServletResponse response) {
+
         return "index";
     }
     

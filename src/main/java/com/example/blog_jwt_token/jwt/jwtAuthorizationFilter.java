@@ -26,8 +26,9 @@ public class jwtAuthorizationFilter  extends BasicAuthenticationFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)throws IOException, ServletException {
-        System.out.println("doFilterInternal 입장");
+        System.out.println("doFilterInternal 입장"+request.getHeader("Authorization")+response.getHeader("Authorization"));
         if(request.getHeader("Authorization")==null||!request.getHeader("Authorization").startsWith("Bearer")){
+            System.out.println("헤더 없음");
             chain.doFilter(request, response);
         }else{
             String jwtToken=request.getHeader("Authorization");
