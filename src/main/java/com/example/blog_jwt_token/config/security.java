@@ -16,7 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
+import org.springframework.web.filter.CorsFilter;
 
 import lombok.RequiredArgsConstructor;
 
@@ -30,6 +30,8 @@ public class security extends WebSecurityConfigurerAdapter {
     private userDao dao;
     @Autowired
     private jwtService jwtService;
+    @Autowired
+    private CorsFilter corsFilter;
 
 
     @Bean
