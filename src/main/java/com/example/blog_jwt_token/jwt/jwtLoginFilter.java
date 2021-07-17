@@ -32,7 +32,7 @@ public class jwtLoginFilter extends UsernamePasswordAuthenticationFilter {
             userDto userDto=objectMapper.readValue(request.getInputStream(), userDto.class);
             System.out.println(userDto);
             
-            Authentication authentication=jwtService.getAuthentication(userDto);
+            Authentication authentication=jwtService.confrimAuthenticate(userDto);
             jwtService.setSecuritySession(authentication);
             
             System.out.println("로그인완료"+authentication.getName());

@@ -28,9 +28,14 @@ public class jwtService {
         System.out.println("토큰 제작시작");
         return JWT.create().withSubject("jwtToken").withExpiresAt(new Date(System.currentTimeMillis()+(1000*30))).withClaim("id",id).sign(Algorithm.HMAC512("kim"));
     }
-    public Authentication getAuthentication(userDto dto) {
+    public Authentication confrimAuthenticate(userDto dto) {
         principaldetail principaldetail=new principaldetail(dto);
         return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(dto.getEmail(),dto.getPwd(),principaldetail.getAuthorities()));
+    }
+    public Authentication makeAuthentication(userDto userDto) {
+        System.out.println(userDto.getEmail()+"makeAuthentication 강제로그인");
+        principaldetail principaldetail=new principaldetail(userDto);
+        return new UsernamePasswordAuthenticationToken(userDto.getEmail(),userDto.getPwd(),principaldetail.getAuthorities());
     }
     public void setSecuritySession(Authentication authentication) {
         SecurityContextHolder.getContext().setAuthentication(authentication);
