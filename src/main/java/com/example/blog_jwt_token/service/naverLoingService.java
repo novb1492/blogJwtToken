@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.example.blog_jwt_token.config.security;
 import com.example.blog_jwt_token.jwt.jwtService;
+import com.example.blog_jwt_token.model.jwt.jwtDto;
 import com.example.blog_jwt_token.model.oauth.naverDto;
 import com.example.blog_jwt_token.model.user.userDao;
 import com.example.blog_jwt_token.model.user.userDto;
@@ -86,9 +87,9 @@ public class naverLoingService   {
                Authentication authentication=jwtService.confrimAuthenticate(userDto);
                jwtService.setSecuritySession(authentication);
 
-               String refreshtoken=jwtService.getJwtToken();
-               jwtService.insertRefreshToken(refreshtoken,dto.getId());
-               response.setHeader("refreshToken",refreshtoken);
+               jwtDto jwtDto=jwtService.getRefreshToken(userDto.getId());
+           
+               response.setHeader("refreshToken",jwtService.getRefreshToken(jwtDto, userDto.getId()));
                response.setHeader("Authorization", "Bearer "+jwtService.getJwtToken(dto.getId()));
                  
         } catch (Exception e) {
