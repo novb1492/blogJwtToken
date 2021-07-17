@@ -4,4 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface jwtDao extends JpaRepository<jwtDto,Integer> {
     jwtDto findByTokenName(String name);
+
+    jwtDto findByUserid(int userid);
+
+   
 }

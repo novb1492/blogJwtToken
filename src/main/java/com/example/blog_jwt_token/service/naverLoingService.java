@@ -15,6 +15,7 @@ import com.example.blog_jwt_token.model.user.userDao;
 import com.example.blog_jwt_token.model.user.userDto;
 import com.nimbusds.jose.shaded.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
@@ -22,13 +23,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+
+
 @Service
 public class naverLoingService   {
     
     private final String id="DrqDuzgTpM_sfreaZMly";
     private final String pwd="wCLQZ1kaQT";
     private final String callBackUrl="http://localhost:8080/auth/navercallback";
-    private final String oauthPwd="1111";
+    @Value("${oauth.pwd}")
+    private String oauthPwd;
 
     private RestTemplate restTemplate=new RestTemplate();
     private HttpHeaders headers=new HttpHeaders();
@@ -39,6 +43,7 @@ public class naverLoingService   {
     private security security;
     @Autowired
     private jwtService jwtService;
+
 
     public String naverLogin() {
         String state="";
@@ -70,9 +75,8 @@ public class naverLoingService   {
            }else{
                email=naverDto.getResponse().get("email").toString();
            }
-          
                split=naverDto.getResponse().get("mobile_e164").toString().split("2");
-                userDto dto=dao.findByEmail(email);
+               userDto dto=dao.findByEmail(email);
                if(dto==null){
                BCryptPasswordEncoder bCryptPasswordEncoder=security.pwdEncoder();
                 dto=new userDto(0, email, "kim", bCryptPasswordEncoder.encode(oauthPwd), "ROLE_USER");  

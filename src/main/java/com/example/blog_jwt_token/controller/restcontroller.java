@@ -53,4 +53,5 @@ public class restcontroller {
         System.out.println("admin 입장");
         return "admin";
     }
+    
 }

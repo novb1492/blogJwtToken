@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.example.blog_jwt_token.config.principaldetail;
+import com.example.blog_jwt_token.model.jwt.jwtDto;
 import com.example.blog_jwt_token.model.user.userDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -49,11 +50,12 @@ public class jwtLoginFilter extends UsernamePasswordAuthenticationFilter {
 
         principaldetail principaldetail=(principaldetail)authResult.getPrincipal();
         String jwtToken=jwtService.getJwtToken(principaldetail.getUserDto().getId());
-        String refreshToken=jwtService.getJwtToken();
-
-        jwtService.insertRefreshToken(refreshToken, principaldetail.getUserDto().getId());
-        response.setHeader("refreshToken", "Bearer "+refreshToken);
+        jwtDto jwtDto=jwtService.getRefreshToken(principaldetail.getUserDto().getId());
+        
+        response.setHeader("refreshToken", "Bearer "+jwtService.getRefreshToken(jwtDto,principaldetail.getUserDto().getId()));
         response.setHeader("Authorization", "Bearer "+jwtToken); 
+
+
     }
 
     @Override

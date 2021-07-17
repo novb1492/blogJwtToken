@@ -1,5 +1,6 @@
 package com.example.blog_jwt_token.controller;
 
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -32,10 +33,11 @@ public class controller {
     public String Atuh2(HttpServletRequest request,HttpServletResponse response) {
         System.out.println("/auth2입장");
         System.out.println(request.getHeader("Authorization")+"헤더");
-        return "auth2page";
+        return "authpage.html";
     }
     @RequestMapping("/auth/index")
     public String authIndex(HttpServletRequest request,HttpServletResponse response) {
+        System.out.println("index 페이지");
         return "index";
     }
     
