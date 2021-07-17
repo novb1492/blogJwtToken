@@ -25,15 +25,18 @@ public class jwtService {
     private jwtDao jwtDao;
 
     public String getJwtToken(int id) {
-        System.out.println("토큰 제작시작");
+        System.out.println("getJwtToken 토큰 제작시작");
         return JWT.create().withSubject("jwtToken").withExpiresAt(new Date(System.currentTimeMillis()+(1000*30))).withClaim("id",id).sign(Algorithm.HMAC512("kim"));
+    }
+    public int onpenJwtToken(String jwtToken) {
+        return JWT.require(Algorithm.HMAC512("kim")).build().verify(jwtToken).getClaim("id").asInt();
     }
     public Authentication confrimAuthenticate(userDto dto) {
         principaldetail principaldetail=new principaldetail(dto);
         return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(dto.getEmail(),dto.getPwd(),principaldetail.getAuthorities()));
     }
     public Authentication makeAuthentication(userDto userDto) {
-        System.out.println(userDto.getEmail()+"makeAuthentication 강제로그인");
+        System.out.println(userDto.getEmail()+" makeAuthentication 강제로그인");
         principaldetail principaldetail=new principaldetail(userDto);
         return new UsernamePasswordAuthenticationToken(userDto.getEmail(),userDto.getPwd(),principaldetail.getAuthorities());
     }
@@ -41,7 +44,7 @@ public class jwtService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
     public String getJwtToken() {
-        System.out.println("리프레시 토큰 제작시작");
+        System.out.println("getJwtToken 리프레시 토큰 제작시작");
         return JWT.create().withSubject("jwtToken").withExpiresAt(new Date(System.currentTimeMillis()+(60000*10))).sign(Algorithm.HMAC512("kim"));
     }
     public void insertRefreshToken(String refreshToken,int userid) {
@@ -63,7 +66,7 @@ public class jwtService {
         return null;
     }
     public jwtDto getRefreshToken(String refreshToken) {
-        System.out.println(refreshToken+" 찾기");
+        System.out.println(refreshToken+" getRefreshToken 찾기");
         return jwtDao.findByTokenName(refreshToken);
     }
     public String replaceBearer(String token) {

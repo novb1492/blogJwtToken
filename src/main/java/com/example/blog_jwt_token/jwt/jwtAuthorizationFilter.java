@@ -6,18 +6,11 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.TokenExpiredException;
-import com.example.blog_jwt_token.config.principaldetail;
 import com.example.blog_jwt_token.model.jwt.jwtDto;
 import com.example.blog_jwt_token.model.user.userDao;
 import com.example.blog_jwt_token.model.user.userDto;
-
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 public class jwtAuthorizationFilter  extends BasicAuthenticationFilter {
@@ -42,7 +35,7 @@ public class jwtAuthorizationFilter  extends BasicAuthenticationFilter {
                 jwtToken=jwtToken.replace("Bearer ", "");
                 System.out.println(jwtToken+"토큰받음");
                 try {
-                    int userid=JWT.require(Algorithm.HMAC512("kim")).build().verify(jwtToken).getClaim("id").asInt();
+                    int userid=jwtService.onpenJwtToken(jwtToken);
                     System.out.println(userid+"토큰해제");
  
                     userDto userDto=dao.findById(userid).orElseThrow(()->new RuntimeException("존재하지 않는 회원입니다"));
@@ -55,7 +48,7 @@ public class jwtAuthorizationFilter  extends BasicAuthenticationFilter {
                     System.out.println("토큰이 만료 되었습니다");
                     String refreshToken=request.getHeader("refreshToken");
                     System.out.println(refreshToken+" 리프레시 토큰");
-                    
+
                     if(refreshToken.startsWith("Bearer")){
                         jwtDto jwtDto=jwtService.getRefreshToken(jwtService.replaceBearer(refreshToken));
                         String newJwtToken=jwtService.getNewJwtToken(jwtDto);
