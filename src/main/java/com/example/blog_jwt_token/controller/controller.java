@@ -21,7 +21,7 @@ public class controller {
     public String naverLogin2(HttpServletRequest request,HttpServletResponse response) {
         System.out.println("naverlogin요청");
         naverLoingService.LoginNaver(naverLoingService.getNaverToken(request.getParameter("code"), request.getParameter("state")),request,response);
-        return "index";
+        return "gohome";
     }
     @RequestMapping("/auth/auth")
     public String authAtuh(HttpServletRequest request,HttpServletResponse response) {
@@ -35,10 +35,6 @@ public class controller {
         System.out.println(request.getHeader("Authorization")+"헤더");
         return "authpage.html";
     }
-    @RequestMapping("/auth/index")
-    public String authIndex(HttpServletRequest request,HttpServletResponse response) {
-        System.out.println("index 페이지");
-        return "index";
-    }
+ 
     
 }

@@ -16,7 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.filter.CorsFilter;
+
 
 import lombok.RequiredArgsConstructor;
 
@@ -31,7 +31,8 @@ public class security extends WebSecurityConfigurerAdapter {
     @Autowired
     private jwtService jwtService;
     @Autowired
-    private CorsFilter corsFilter;
+    private corsConfig corsConfig;
+ 
 
 
     @Bean
@@ -47,8 +48,10 @@ public class security extends WebSecurityConfigurerAdapter {
     
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        http
+        .addFilter(corsConfig.corsFilter())
+        .csrf().disable()
+        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and()
         .formLogin().disable()
         .httpBasic().disable()
