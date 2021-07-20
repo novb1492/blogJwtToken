@@ -21,6 +21,11 @@ public class restcontroller {
     @RequestMapping("/auth/index")
     public String hello(HttpServletRequest request,HttpServletResponse response) {
         System.out.println("index");
+        return "home2.jsp";
+    }
+    @RequestMapping("/auth/index2")
+    public String hello2(HttpServletRequest request,HttpServletResponse response) {
+        System.out.println("index2");
         Cookie[] cookies = request.getCookies();
         System.out.println(cookies[0]);
         return "home2.jsp";
