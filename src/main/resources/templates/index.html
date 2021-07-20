@@ -23,7 +23,8 @@ function goNaverLogin(){
     xhr.send(); /// ajax data부분
     xhr.onload = function() { 
         if(xhr.status==200){ // success:function(data)부분 통신 성공시 200반환
-           window.open(xhr.response,"네이버새창", "width=800, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes");
+            location.href=xhr.response;
+           
         }else{
             alert('통신에 실패했습니다');
         }

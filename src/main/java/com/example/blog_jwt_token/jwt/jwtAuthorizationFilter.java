@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.auth0.jwt.exceptions.TokenExpiredException;
@@ -26,12 +27,14 @@ public class jwtAuthorizationFilter  extends BasicAuthenticationFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)throws IOException, ServletException {
-        System.out.println("doFilterInternal 입장"+request.getHeader("Authorization")+response.getHeader("Authorization"));
+        System.out.println("doFilterInternal 입장"+request.getHeader("Authorization"));
         if(request.getHeader("Authorization")==null||!request.getHeader("Authorization").startsWith("Bearer")){
             System.out.println("헤더 없음");
             chain.doFilter(request, response);
         }else{
             String jwtToken=request.getHeader("Authorization");
+            Cookie[] cookie=request.getCookies();
+            System.out.println(cookie.length);
             if(jwtToken.startsWith("Bearer")){
                 jwtToken=jwtToken.replace("Bearer ", "");
                 System.out.println(jwtToken+"토큰받음");

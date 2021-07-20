@@ -1,5 +1,6 @@
 package com.example.blog_jwt_token.controller;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -20,17 +21,21 @@ public class restcontroller {
     @RequestMapping("/auth/index")
     public String hello(HttpServletRequest request,HttpServletResponse response) {
         System.out.println("index");
-        request.setAttribute("name", "kim");
-
-        response.setHeader("Authorization", response.getHeader("Authorization"));
-        return "home.jsp";
+        Cookie[] cookies = request.getCookies();
+        System.out.println(cookies[0]);
+        return "home2.jsp";
     }
 
     @RequestMapping("/auth/naver")
     public String naverLogin() {
         return  naverLoingService.naverLogin();
     }
-    
+    @RequestMapping("/auth/navercallback")
+    public String naverLogin2(HttpServletRequest request,HttpServletResponse response) {
+        System.out.println("naverlogin요청");
+        naverLoingService.LoginNaver(naverLoingService.getNaverToken(request.getParameter("code"), request.getParameter("state")),request,response);
+        return "home.jsp";
+    }
     @RequestMapping("/head")
     public String  Head(HttpServletRequest request,HttpServletResponse response) {
         System.out.println("/head 입장");

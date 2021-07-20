@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -51,11 +52,13 @@ public class jwtLoginFilter extends UsernamePasswordAuthenticationFilter {
         principaldetail principaldetail=(principaldetail)authResult.getPrincipal();
         String jwtToken=jwtService.getJwtToken(principaldetail.getUserDto().getId());
         jwtDto jwtDto=jwtService.getRefreshToken(principaldetail.getUserDto().getId());
+        String refreshToken=jwtService.getRefreshToken(jwtDto,principaldetail.getUserDto().getId());
         
-        response.setHeader("refreshToken", "Bearer "+jwtService.getRefreshToken(jwtDto,principaldetail.getUserDto().getId()));
-        response.setHeader("Authorization", "Bearer "+jwtToken); 
+        Cookie cookie=new Cookie("refreshToken", refreshToken);
+        cookie.setHttpOnly(true);
 
-
+        response.addCookie(cookie);
+        response.setHeader("Authorization", "Bearer "+jwtToken);
     }
 
     @Override
