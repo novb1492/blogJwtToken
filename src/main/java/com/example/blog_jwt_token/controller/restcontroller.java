@@ -17,12 +17,13 @@ public class restcontroller {
     @Autowired
     private naverLoingService naverLoingService;
 
-    @RequestMapping("/auth/hello")
+    @RequestMapping("/auth/index")
     public String hello(HttpServletRequest request,HttpServletResponse response) {
-        System.out.println("hello입장");
-       response.setHeader("test", "fsdfsfs");
+        System.out.println("index");
+        request.setAttribute("name", "kim");
 
-        return "hello";
+        response.setHeader("Authorization", response.getHeader("Authorization"));
+        return "home.jsp";
     }
 
     @RequestMapping("/auth/naver")

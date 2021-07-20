@@ -21,7 +21,7 @@ public class controller {
     public String naverLogin2(HttpServletRequest request,HttpServletResponse response) {
         System.out.println("naverlogin요청");
         naverLoingService.LoginNaver(naverLoingService.getNaverToken(request.getParameter("code"), request.getParameter("state")),request,response);
-        return "gohome";
+        return "index";
     }
     @RequestMapping("/auth/auth")
     public String authAtuh(HttpServletRequest request,HttpServletResponse response) {

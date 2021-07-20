@@ -33,19 +33,15 @@ public class security extends WebSecurityConfigurerAdapter {
     @Autowired
     private corsConfig corsConfig;
  
-
-
     @Bean
     @Override
     protected AuthenticationManager authenticationManager() throws Exception {
         return super.authenticationManager();
     }
-
     @Bean
     public BCryptPasswordEncoder pwdEncoder() {
        return  new BCryptPasswordEncoder();
     }
-    
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
