@@ -15,8 +15,46 @@
         <div sec:authentication="name"></div>
     </div>
     <input type="button" onclick="goNaverLogin()" value="네이버 로그인">
-
+    <input type="button" onclick="getlocal()" value="ㅅㄷㄴㅅ">
+    <input type="button" onclick="doDo()" value="logintest">
 <script>
+    function doajax(url,data,contentType){
+    var xhr = new XMLHttpRequest(); //new로 생성
+    xhr.open('POST', url); 
+    xhr.setRequestHeader("Content-Type",contentType);////이게없으면 psot전송불가 조금 찾았네
+    xhr.send(data); /// ajax data부분
+    return xhr;
+}
+    var data=JSON.stringify({"email":"kim@kim.com","pwd":"1111"});
+function doDo(){
+	 var xhr,url='http://localhost:8080/login'
+	    var contentType="application/json";
+	    xhr=doajax(url,data,contentType);
+	    xhr.onload=function(){
+	        if(xhr.status==200){
+	            jwt=xhr.getResponseHeader('Authorization');
+	            refresh=xhr.getResponseHeader('refreshToken');
+	            localStorage.setItem('Authorization', jwt);
+	           	SetCookie('refresh', '1234');
+	        }
+	    }
+}
+    function getlocal(){
+    $.ajax({
+        url:'/auth/index2',
+        type: 'GET',
+        xhrFields: {
+          withCredentials: true
+        },
+
+        success: function(data) {
+        },
+        error: function(jqXHR, textStatus, errorThrown)
+        {
+          console.log(jqXHR,textStatus,errorThrown);
+        }
+      })
+}
 function goNaverLogin(){
     var xhr = new XMLHttpRequest(); //new로 생성
     xhr.open('POST', '/auth/naver', true); //j쿼리 $ajax.({type,url},true가 비동기)

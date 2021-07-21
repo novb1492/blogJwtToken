@@ -8,6 +8,7 @@ import com.example.blog_jwt_token.service.naverLoingService;
 import com.nimbusds.jose.shaded.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,10 +25,9 @@ public class restcontroller {
         return "home2.jsp";
     }
     @RequestMapping("/auth/index2")
-    public String hello2(HttpServletRequest request,HttpServletResponse response) {
+    public String hello2(@CookieValue(value = "refreshToken", required = false) Cookie rCookie,HttpServletResponse response) {
         System.out.println("index2");
-        Cookie[] cookies = request.getCookies();
-        System.out.println(cookies[0]);
+        System.out.println(rCookie.getValue());
         return "home2.jsp";
     }
 
