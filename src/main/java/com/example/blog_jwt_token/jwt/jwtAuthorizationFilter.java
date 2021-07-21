@@ -41,7 +41,6 @@ public class jwtAuthorizationFilter  extends BasicAuthenticationFilter {
                     System.out.println(userid+"토큰해제");
  
                     userDto userDto=dao.findById(userid).orElseThrow(()->new RuntimeException("존재하지 않는 회원입니다"));
-            
                     jwtService.setSecuritySession(jwtService.makeAuthentication(userDto));
             
                     chain.doFilter(request, response);   
