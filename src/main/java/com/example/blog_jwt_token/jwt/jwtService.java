@@ -3,6 +3,8 @@ package com.example.blog_jwt_token.jwt;
 import java.sql.Timestamp;
 import java.util.Date;
 
+
+
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.example.blog_jwt_token.config.principaldetail;
@@ -72,9 +74,6 @@ public class jwtService {
         System.out.println(refreshToken+" getRefreshToken 찾기");
         return jwtDao.findByTokenName(refreshToken);
     }
-    public String replaceBearer(String token) {
-        return  token.replace("Bearer ", "");
-    } 
     public jwtDto getRefreshToken(int userid) {
         System.out.println(userid+"기존 getRefreshToken 찾기");
         return jwtDao.findByUserid(userid);

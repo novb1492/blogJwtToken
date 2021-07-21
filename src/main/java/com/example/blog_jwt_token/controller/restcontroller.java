@@ -30,7 +30,6 @@ public class restcontroller {
         System.out.println(rCookie.getValue());
         return "home2.jsp";
     }
-
     @RequestMapping("/auth/naver")
     public String naverLogin() {
         return  naverLoingService.naverLogin();
@@ -40,17 +39,6 @@ public class restcontroller {
         System.out.println("naverlogin요청");
         naverLoingService.LoginNaver(naverLoingService.getNaverToken(request.getParameter("code"), request.getParameter("state")),request,response);
         return "home.jsp";
-    }
-    @RequestMapping("/head")
-    public String  Head(HttpServletRequest request,HttpServletResponse response) {
-        System.out.println("/head 입장");
-        System.out.println(request.getHeader("Authorization"));
-        return "head";
-    }
-    @RequestMapping("/auth/head")
-    public String  authHead(HttpServletRequest request,HttpServletResponse response) {
-        System.out.println("/auth/head 입장");
-        return "/auth/head";
     }
     @RequestMapping("/api/v1/user/test")
     public JSONObject  user(HttpServletRequest request,HttpServletResponse response) {

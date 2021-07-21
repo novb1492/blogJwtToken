@@ -33,8 +33,6 @@ public class jwtAuthorizationFilter  extends BasicAuthenticationFilter {
             chain.doFilter(request, response);
         }else{
             String jwtToken=request.getHeader("Authorization");
-            Cookie[] cookie=request.getCookies();
-            System.out.println(cookie.length);
             if(jwtToken.startsWith("Bearer")){
                 jwtToken=jwtToken.replace("Bearer ", "");
                 System.out.println(jwtToken+"토큰받음");
@@ -50,11 +48,16 @@ public class jwtAuthorizationFilter  extends BasicAuthenticationFilter {
                 } catch (TokenExpiredException e) {
                     e.printStackTrace();
                     System.out.println("토큰이 만료 되었습니다");
-                    String refreshToken=request.getHeader("refreshToken");
-                    System.out.println(refreshToken+" 리프레시 토큰");
+                    if(request.getContentType()!=null){
+                        String refreshToken="";
+                        for(Cookie c:request.getCookies()){
+                            if(c.getName().equals("refreshToken")){
+                                refreshToken=c.getValue();
+                            }
+                        }
+                        System.out.println(refreshToken+" 리프레시 토큰");
 
-                    if(refreshToken.startsWith("Bearer")){
-                        jwtDto jwtDto=jwtService.getRefreshToken(jwtService.replaceBearer(refreshToken));
+                        jwtDto jwtDto=jwtService.getRefreshToken(refreshToken);
                         String newJwtToken=jwtService.getNewJwtToken(jwtDto);
                         System.out.println(newJwtToken+" 새 토큰");
 
@@ -65,8 +68,8 @@ public class jwtAuthorizationFilter  extends BasicAuthenticationFilter {
                         response.setHeader("refreshToken", refreshToken);
                         chain.doFilter(request, response);  
                     }else{
-                        System.out.println("정상적인 리프레시 토큰이 아닙니다");
-                    }
+                        System.out.println("리프레시 토큰이 정상적이지 않습니다");
+                    }    
                 }
             }else{
                 System.out.println("정상적인 토큰이 아닙니다"); 

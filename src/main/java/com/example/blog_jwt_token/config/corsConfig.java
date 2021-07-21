@@ -15,7 +15,7 @@ public class corsConfig {
       UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
       CorsConfiguration config = new CorsConfiguration();
       config.setAllowCredentials(true);
-      config.addAllowedOrigin("http://localhost:9090"); // e.g. http://domain1.com
+      config.addAllowedOrigin("http://localhost:9090");
       config.addAllowedHeader("content-type");
       config.addAllowedHeader("Authorization");
       config.addAllowedMethod("GET");

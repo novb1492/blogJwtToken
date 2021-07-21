@@ -54,7 +54,7 @@ public class jwtLoginFilter extends UsernamePasswordAuthenticationFilter {
         jwtDto jwtDto=jwtService.getRefreshToken(principaldetail.getUserDto().getId());
         String refreshToken=jwtService.getRefreshToken(jwtDto,principaldetail.getUserDto().getId());
         
-        Cookie cookie=new Cookie("refreshToken", refreshToken);
+        Cookie cookie=new Cookie("refreshToken",refreshToken);
         cookie.setHttpOnly(true);
     
         response.addCookie(cookie);
