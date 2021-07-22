@@ -1,13 +1,12 @@
-package com.example.blog_jwt_token.service;
+package com.example.blog_jwt_token.service.oauthLogin;
 
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import com.example.blog_jwt_token.config.security;
 import com.example.blog_jwt_token.jwt.jwtService;
 import com.example.blog_jwt_token.model.jwt.jwtDto;
@@ -27,7 +26,7 @@ import org.springframework.web.client.RestTemplate;
 
 
 @Service
-public class naverLoingService   {
+public class naverLoginService   {
     
     private final String id="DrqDuzgTpM_sfreaZMly";
     private final String pwd="wCLQZ1kaQT";
@@ -88,10 +87,9 @@ public class naverLoingService   {
                jwtService.setSecuritySession(authentication);
 
                jwtDto jwtDto=jwtService.getRefreshToken(userDto.getId());
-           
-               HttpSession httpSession=request.getSession();
-               httpSession.setAttribute("Authorization","Bearer "+jwtService.getJwtToken(dto.getId()));
-               response.setHeader("refreshToken",jwtService.getRefreshToken(jwtDto, userDto.getId()));
+               Cookie cookie=new Cookie("refreshToken", jwtService.getRefreshToken(jwtDto, userDto.getId()));
+
+               response.addCookie(cookie);
                response.setHeader("Authorization", "Bearer "+jwtService.getJwtToken(dto.getId()));
                  
         } catch (Exception e) {

@@ -4,7 +4,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.example.blog_jwt_token.service.naverLoingService;
+import com.example.blog_jwt_token.service.oauthLogin.naverLoginService;
 import com.nimbusds.jose.shaded.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ public class restcontroller {
 
     
     @Autowired
-    private naverLoingService naverLoingService;
+    private naverLoginService naverLoingService;
 
     @RequestMapping("/auth/index")
     public String hello(HttpServletRequest request,HttpServletResponse response) {
