@@ -79,7 +79,7 @@ public class naverLoginService   {
                userDto dto=dao.findByEmail(email);
                if(dto==null){
                BCryptPasswordEncoder bCryptPasswordEncoder=security.pwdEncoder();
-                dto=new userDto(0, email, "kim", bCryptPasswordEncoder.encode(oauthPwd), "ROLE_USER");  
+                dto=new userDto(0, email,(String)naverDto.getResponse().get("name"),bCryptPasswordEncoder.encode(oauthPwd), "ROLE_USER");  
                 dao.save(dto);
                }
                userDto userDto=new userDto(dto.getId(), dto.getEmail(), dto.getName(),oauthPwd, dto.getRole());
