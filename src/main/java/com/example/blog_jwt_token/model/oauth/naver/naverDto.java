@@ -1,4 +1,4 @@
-package com.example.blog_jwt_token.model.oauth;
+package com.example.blog_jwt_token.model.oauth.naver;
 
 import com.nimbusds.jose.shaded.json.JSONObject;
 

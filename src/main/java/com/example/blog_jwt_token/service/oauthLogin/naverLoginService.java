@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.example.blog_jwt_token.config.security;
 import com.example.blog_jwt_token.jwt.jwtService;
 import com.example.blog_jwt_token.model.jwt.jwtDto;
-import com.example.blog_jwt_token.model.oauth.naverDto;
+import com.example.blog_jwt_token.model.oauth.naver.naverDto;
 import com.example.blog_jwt_token.model.user.userDao;
 import com.example.blog_jwt_token.model.user.userDto;
 import com.nimbusds.jose.shaded.json.JSONObject;
