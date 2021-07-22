@@ -37,11 +37,6 @@ public class restcontroller {
     public String naverLogin() {
         return  naverLoingService.naverLogin();
     }
-    @RequestMapping("/auth/navercallback")
-    public void naverLogin2(HttpServletRequest request,HttpServletResponse response) {
-        System.out.println("naverlogin요청");
-        naverLoingService.LoginNaver(naverLoingService.getNaverToken(request.getParameter("code"), request.getParameter("state")),request,response);
-    }
     @RequestMapping("/auth/kakao")
     public String kakaoLogin(HttpServletRequest request,HttpServletResponse response) {
         return kakaoLoginservice.kakaoGetCode();

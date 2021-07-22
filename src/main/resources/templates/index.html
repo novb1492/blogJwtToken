@@ -16,9 +16,7 @@
             xhr.send(); /// ajax data부분
             xhr.onload = function() { 
                 if(xhr.status==200){
-                    window.name='home.js';
-                    window.open(xhr.response, "네이버새창", "width=800, height=700, toolbar=no, menubar=no, scrollbars=no, resizable=yes" );
-                    top.location.href='http://localhost:9090/home2.jsp'; 
+                    location.href=xhr.response;
                 }else{
                     alert('통신에 실패했습니다');
                 }
