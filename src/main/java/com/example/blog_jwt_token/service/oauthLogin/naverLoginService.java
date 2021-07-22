@@ -89,7 +89,7 @@ public class naverLoginService   {
                jwtDto jwtDto=jwtService.getRefreshToken(userDto.getId());
                Cookie cookie=new Cookie("refreshToken", jwtService.getRefreshToken(jwtDto, userDto.getId()));
                cookie.setHttpOnly(true);
-               cookie.setPath("/");
+               cookie.setPath("/front/");
 
                response.addCookie(cookie);
                response.setHeader("Authorization", "Bearer "+jwtService.getJwtToken(dto.getId()));

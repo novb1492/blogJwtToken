@@ -47,7 +47,7 @@ public class jwtAuthorizationFilter  extends BasicAuthenticationFilter {
                 } catch (TokenExpiredException e) {
                     e.printStackTrace();
                     System.out.println("토큰이 만료 되었습니다");
-                    if(request.getContentType()!=null){
+                
                         String refreshToken="";
                         for(Cookie c:request.getCookies()){
                             if(c.getName().equals("refreshToken")){
@@ -66,9 +66,6 @@ public class jwtAuthorizationFilter  extends BasicAuthenticationFilter {
                         response.setHeader("Authorization","Bearer "+newJwtToken);
                         response.setHeader("refreshToken", refreshToken);
                         chain.doFilter(request, response);  
-                    }else{
-                        System.out.println("리프레시 토큰이 정상적이지 않습니다");
-                    }    
                 }
             }else{
                 System.out.println("정상적인 토큰이 아닙니다"); 

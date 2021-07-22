@@ -19,7 +19,6 @@ public class controller {
     public String naverLogin2(HttpServletRequest request,HttpServletResponse response) {
         System.out.println("naverlogin요청");
         naverLoingService.LoginNaver(naverLoingService.getNaverToken(request.getParameter("code"), request.getParameter("state")),request,response);
-
-        return "redirect:/";
+        return "redirect:http://localhost:9090/front/home.jsp";
     }
 }
