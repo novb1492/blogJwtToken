@@ -1,4 +1,4 @@
-package com.example.blog_jwt_token.service.oauthLogin.kako;
+package com.example.blog_jwt_token.service.oauthLogin.kakao;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;

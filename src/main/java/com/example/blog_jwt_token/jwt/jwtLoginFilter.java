@@ -56,7 +56,7 @@ public class jwtLoginFilter extends UsernamePasswordAuthenticationFilter {
         
         Cookie cookie=new Cookie("refreshToken",refreshToken);
         cookie.setHttpOnly(true);
-        cookie.setPath("/front/");
+        cookie.setPath("/");
     
         response.addCookie(cookie);
         response.setHeader("Authorization", "Bearer "+jwtToken);
