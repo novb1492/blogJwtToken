@@ -1,4 +1,4 @@
-package com.example.blog_jwt_token.service.oauthLogin;
+package com.example.blog_jwt_token.service.oauthLogin.naver;
 
 
 import java.io.UnsupportedEncodingException;

@@ -4,8 +4,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.example.blog_jwt_token.service.oauthLogin.naverLoginService;
 import com.example.blog_jwt_token.service.oauthLogin.kakao.kakaoLoginservice;
+import com.example.blog_jwt_token.service.oauthLogin.naver.naverLoginService;
 import com.nimbusds.jose.shaded.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;

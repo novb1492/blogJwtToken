@@ -3,7 +3,7 @@ package com.example.blog_jwt_token.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.example.blog_jwt_token.service.oauthLogin.naverLoginService;
+import com.example.blog_jwt_token.service.oauthLogin.naver.naverLoginService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
