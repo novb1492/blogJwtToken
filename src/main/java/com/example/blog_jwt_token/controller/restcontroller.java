@@ -4,25 +4,37 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.example.blog_jwt_token.model.user.loginDto;
+import com.example.blog_jwt_token.service.userService;
 import com.example.blog_jwt_token.service.oauthLogin.kakao.kakaoLoginservice;
 import com.example.blog_jwt_token.service.oauthLogin.naver.naverLoginService;
 import com.nimbusds.jose.shaded.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class restcontroller {
 
-    
+    @Autowired
+    private userService userService;
     @Autowired
     private naverLoginService naverLoingService;
     @Autowired
     private kakaoLoginservice kakaoLoginservice;
 
-    @RequestMapping("/auth/index")
+    @RequestMapping("/auth/confrimEmail")
+    public boolean confrimEmail(HttpServletRequest request,HttpServletResponse response) {
+        return userService.confrimEmail((String)request.getParameter("email"));
+    }
+    @RequestMapping("/auth/insertUser")
+    public JSONObject insertUser(@RequestBody loginDto loginDto) {
+        return userService.insertUser(loginDto);
+    }
+    @RequestMapping("/index")
     public String hello(HttpServletRequest request,HttpServletResponse response) {
         System.out.println("index");
         return "home2.jsp";

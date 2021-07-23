@@ -3,6 +3,7 @@ package com.example.blog_jwt_token.service;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+import com.nimbusds.jose.shaded.json.JSONObject;
 
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,12 @@ public class utillService {
            return true;
         }
         return false;
+    }
+    public JSONObject makeJson(boolean result,String messege) {
+        JSONObject jsonObject=new JSONObject();
+        jsonObject.put("result",result);
+        jsonObject.put("messege", messege);
+        return jsonObject;
     } 
 
 }
