@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.example.blog_jwt_token.model.user.loginDto;
 import com.example.blog_jwt_token.service.userService;
-import com.example.blog_jwt_token.service.oauthLogin.kakao.kakaoLoginservice;
+
 import com.example.blog_jwt_token.service.oauthLogin.naver.naverLoginService;
 import com.nimbusds.jose.shaded.json.JSONObject;
 
@@ -23,8 +23,7 @@ public class restcontroller {
     private userService userService;
     @Autowired
     private naverLoginService naverLoingService;
-    @Autowired
-    private kakaoLoginservice kakaoLoginservice;
+
 
     @RequestMapping("/auth/confrimEmail")
     public boolean confrimEmail(HttpServletRequest request,HttpServletResponse response) {
@@ -48,10 +47,6 @@ public class restcontroller {
     @RequestMapping("/auth/naver")
     public String naverLogin() {
         return  naverLoingService.naverLogin();
-    }
-    @RequestMapping("/auth/kakao")
-    public String kakaoLogin(HttpServletRequest request,HttpServletResponse response) {
-        return kakaoLoginservice.kakaoGetCode();
     }
     @RequestMapping("/api/v1/user/test")
     public JSONObject  user(HttpServletRequest request,HttpServletResponse response) {
